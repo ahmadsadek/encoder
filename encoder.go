@@ -20,25 +20,46 @@ type Nas5GSUpdateType struct {
 
 
 func (ie Nas5GSUpdateType) Encode(buffer *bytes.Buffer) {
-
 	
-	return 
-}
-
-
-
-func main() {
-	fmt.Println("Hello GO")
+	fmt.Println("Enter Encode")
 	
-	ie := Nas5GSUpdateType{ IEI:1, Length:2, EPS_PNB_CIoT:0, F5GS_PNB_CIoT:0, NG_RAN_RCU:1, SMS_requested:1, spare0: 0, spare1:0}
-		
-				
 	buff, err := structex.EncodeByteBuffer(ie)
 		
 	if err != nil {
 		panic("a problem")
 		}
+	
+	fmt.Println("Encoded array",buff)
+	
+	n,_:=buffer.Write(buff)
+	fmt.Println("Number of Bytes :", n)
+	
+	
+	fmt.Printf("Bytestrom=")
+	for i := 0; i < n; i++ {
+		fmt.Printf("0x%02X", buff[i])
+		if i != n-1 {
+			fmt.Printf(",")
+		}
+	}
+	fmt.Println()
+	
+	fmt.Println("Exit Encode")
+}
 
-	fmt.Println(buff)
+
+
+
+func main() {
+
+	fmt.Println("Enter Main")
+	
+	ie := Nas5GSUpdateType{ IEI:1, Length:2, SMS_requested:1, NG_RAN_RCU:1, F5GS_PNB_CIoT:0, EPS_PNB_CIoT:0, spare0: 0, spare1:0}
+	
+	buf := new(bytes.Buffer)
+	
+	ie.Encode(buf)
+
+	fmt.Println("Exit Main")
 
 }
